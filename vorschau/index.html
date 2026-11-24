@@ -45,14 +45,16 @@ p{text-wrap:pretty}
 
 /* Story: Hero + 3D */
 .story{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:20px}
-.story-text{padding-left:max(20px,calc((100vw - 1200px)/2))}
-.stage{position:sticky;top:0;height:100vh;height:100svh}
+.story-text{padding-left:max(20px,calc((100vw - 1200px)/2));position:relative;z-index:1}
+.herobg{position:absolute;top:0;left:21%;right:0;height:100vh;height:100svh;z-index:0;background:url(assets/hero-baustelle.jpg) 50% 30%/cover no-repeat;pointer-events:none}
+.herobg::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--petrol) 0%,rgba(4,32,41,0) 34%),linear-gradient(180deg,rgba(4,32,41,.75) 0%,rgba(4,32,41,0) 22%),linear-gradient(90deg,var(--petrol) 0%,rgba(4,32,41,.84) 22%,rgba(4,32,41,.34) 44%,rgba(4,32,41,.4) 100%)}
+.stage{position:sticky;top:0;height:100vh;height:100svh;z-index:1}
 .stage canvas{width:100%;height:100%;display:block}
 .stage-label{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);display:flex;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .stage-label span{padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:rgba(255,255,255,.45);transition:all .4s;white-space:nowrap}
 .stage-label span.on{background:#fff;color:var(--petrol);border-color:#fff}
 .hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px 0 60px}
-.hero p.lead{font-size:clamp(1.1rem,1.5vw,1.3rem);max-width:33em;margin:26px 0 34px;color:rgba(255,255,255,.82)}
+.hero p.lead{font-size:clamp(1.1rem,1.5vw,1.3rem);max-width:24em;text-shadow:0 1px 14px rgba(4,32,41,.7);margin:26px 0 34px;color:rgba(255,255,255,.82)}
 .hero .cta{display:flex;flex-wrap:wrap;gap:12px}
 .hero .proof{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:46px;padding-top:24px;border-top:1px solid var(--line);font-size:.95rem;color:rgba(255,255,255,.7)}
 .hero .proof b{color:#fff;font-weight:700}
@@ -68,6 +70,9 @@ p{text-wrap:pretty}
 @keyframes hint{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 @media(max-width:860px){
   .story{display:flex;flex-direction:column}
+  .herobg{left:0;background-position:42% 20%}
+  .herobg::after{background:linear-gradient(0deg,var(--petrol) 0%,rgba(4,32,41,.55) 45%,rgba(4,32,41,.8) 100%)}
+  .hero,.step{position:relative;z-index:1}
   .story-text{display:contents}
   .hero{order:0}.stage{order:1}.step{order:2}
   .stage{height:44svh;top:58px;z-index:2;background:linear-gradient(var(--petrol) 86%,transparent)}
@@ -236,6 +241,7 @@ footer nav{display:flex;gap:24px}
 
 <main id="top">
 <div class="story" id="story">
+  <div class="herobg" aria-hidden="true"></div>
   <div class="story-text">
     <div class="hero">
       <span class="eyebrow">Fritz Gruppe · Karlsruhe · seit 2011</span>
@@ -528,7 +534,7 @@ const house = new THREE.Group();
 scene.add(house);
 const W = 4.6, H = 2.7, D = 2.8;
 
-const ground = new THREE.Mesh(new THREE.CylinderGeometry(4.7, 4.7, .16, 64), mat(0x0e3a47, {flatShading:false}));
+const ground = new THREE.Mesh(new THREE.CylinderGeometry(4.1, 4.1, .16, 64), mat(0x0e3a47, {flatShading:false}));
 ground.position.y = -.08; ground.receiveShadow = true; house.add(ground);
 
 const mWall = mat(0x7a756c), mSockel = mat(0x55514b), mRoof = mat(0x4b4642);
@@ -644,6 +650,7 @@ function size(){
   const narrow = w/h < 1;
   camera.fov = narrow ? 44 : 32;
   camera.position.set(0, narrow ? 4.2 : 4.6, narrow ? 13.5 : 14.5);
+  house.position.x = narrow ? 0 : 1.1;
   camera.lookAt(0, 1.55, 0);
   camera.updateProjectionMatrix();
 }
