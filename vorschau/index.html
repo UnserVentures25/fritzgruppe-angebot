@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fritz Gruppe – Sanieren statt abreißen (Designentwurf)</title>
+<meta name="description" content="Designentwurf von Y Ventures für die Fritz Gruppe, Karlsruhe. Keine offizielle Website.">
+<link rel="preload" href="assets/urbanist.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Urbanist;src:url(assets/urbanist.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--petrol:#042029;--petrol-2:#0b303c;--petrol-3:#13424f;--sand:#f4f0e7;--paper:#fbf9f4;--ink:#0b1b20;--muted:#5a6b70;--ocker:#e2b04a;--rot:#8c2332;--line:rgba(255,255,255,.14);--r:18px}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:Urbanist,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--petrol);color:#fff;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{line-height:1.05;font-weight:650;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(2.7rem,6.4vw,5.6rem)}
+h2{font-size:clamp(2rem,4.2vw,3.5rem)}
+h3{font-size:1.45rem;letter-spacing:-.01em}
+p{text-wrap:pretty}
+.wrap{width:min(1200px,100% - 40px);margin-inline:auto}
+.eyebrow{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--ocker);margin-bottom:18px;display:block}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:999px;font-weight:700;text-decoration:none;font-size:1rem;border:1.5px solid transparent;cursor:pointer;font-family:inherit;transition:transform .2s,background .2s,color .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--ocker);color:var(--petrol)}
+.btn-primary:hover{background:#f0c264}
+.btn-ghost{border-color:rgba(255,255,255,.35);color:#fff}
+.btn-ghost:hover{border-color:#fff}
+.btn-dark{background:var(--petrol);color:#fff}
+:focus-visible{outline:3px solid var(--ocker);outline-offset:3px;border-radius:6px}
+
+/* Nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;padding:14px 0;transition:background .3s,backdrop-filter .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(4,32,41,.82);backdrop-filter:blur(14px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.nav img{height:30px;width:auto}
+.nav ul{display:flex;gap:30px;list-style:none;padding:0;font-weight:600;font-size:.98rem}
+.nav ul a{text-decoration:none;opacity:.8;transition:opacity .2s}
+.nav ul a:hover{opacity:1}
+.nav .btn{padding:11px 20px;font-size:.95rem}
+@media(max-width:860px){.nav ul{display:none}}
+
+/* Story: Hero + 3D */
+.story{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:20px}
+.story-text{padding-left:max(20px,calc((100vw - 1200px)/2))}
+.stage{position:sticky;top:0;height:100vh;height:100svh}
+.stage canvas{width:100%;height:100%;display:block}
+.stage-label{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);display:flex;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.stage-label span{padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:rgba(255,255,255,.45);transition:all .4s;white-space:nowrap}
+.stage-label span.on{background:#fff;color:var(--petrol);border-color:#fff}
+.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px 0 60px}
+.hero p.lead{font-size:clamp(1.1rem,1.5vw,1.3rem);max-width:33em;margin:26px 0 34px;color:rgba(255,255,255,.82)}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero .proof{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:46px;padding-top:24px;border-top:1px solid var(--line);font-size:.95rem;color:rgba(255,255,255,.7)}
+.hero .proof b{color:#fff;font-weight:700}
+.h1-line{display:block;overflow:hidden}
+.h1-line>span{display:block}
+.h1-line em{font-style:normal;color:var(--ocker)}
+.step{min-height:86vh;display:flex;flex-direction:column;justify-content:center;max-width:30em;padding:40px 0}
+.step .num{font-size:.85rem;font-weight:800;letter-spacing:.14em;color:var(--ocker);margin-bottom:14px}
+.step h2{font-size:clamp(1.9rem,3.3vw,2.9rem);margin-bottom:18px}
+.step p{color:rgba(255,255,255,.78)}
+.scrollhint{margin-top:38px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:10px}
+.scrollhint i{width:1px;height:34px;background:linear-gradient(#fff,transparent);display:block;animation:hint 1.8s infinite}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-width:860px){
+  .story{display:flex;flex-direction:column}
+  .story-text{display:contents}
+  .hero{order:0}.stage{order:1}.step{order:2}
+  .stage{height:44svh;top:58px;z-index:2;background:linear-gradient(var(--petrol) 86%,transparent)}
+  .nav .btn{white-space:nowrap;padding:10px 16px;font-size:.88rem}.nav img{height:24px}
+  .stage-label{bottom:40px;font-size:.66rem}.stage-label span{padding:5px 9px}
+  .hero{min-height:auto;padding:104px 20px 26px}
+  .hero .proof{margin-top:30px}
+  .scrollhint{display:none}
+  .step{min-height:58svh;justify-content:flex-start;padding:30px 20px 40px;max-width:none}
+}
+
+/* Light sections */
+.light{background:var(--paper);color:var(--ink)}
+.sand{background:var(--sand);color:var(--ink)}
+section{padding:clamp(72px,10vw,130px) 0}
+.light .eyebrow,.sand .eyebrow{color:var(--rot)}
+.head{max-width:44em;margin-bottom:54px}
+.head p{color:var(--muted);margin-top:18px;font-size:1.1rem}
+
+/* Zahlen */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-block:1px solid var(--line)}
+.stats div{background:var(--petrol);padding:42px 24px}
+.stats b{font-size:clamp(2.6rem,5vw,4.2rem);font-weight:650;letter-spacing:-.03em;display:block;line-height:1;font-variant-numeric:tabular-nums}
+.stats span{color:rgba(255,255,255,.65);font-size:.98rem;display:block;margin-top:12px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* Portfolio */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;perspective:1400px}
+.card{position:relative;border-radius:var(--r);overflow:hidden;min-height:400px;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;color:#fff;text-decoration:none;background:var(--petrol-2);transform-style:preserve-3d;transition:transform .25s ease-out,box-shadow .25s;box-shadow:0 1px 2px rgba(4,32,41,.1),0 14px 40px -18px rgba(4,32,41,.45);will-change:transform}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.card:hover img{transform:scale(1.06)}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,32,41,.05) 20%,rgba(4,32,41,.93) 86%)}
+.card>*:not(img){position:relative;z-index:1;transform:translateZ(30px)}
+.card .tag{align-self:flex-start;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);padding:6px 12px;border-radius:999px;margin-bottom:auto}
+.card h3{font-size:1.8rem;margin-bottom:10px}
+.card p{font-size:1rem;color:rgba(255,255,255,.82);max-width:30em}
+.card .go{margin-top:18px;font-weight:700;font-size:.95rem;display:inline-flex;gap:8px;align-items:center;color:var(--ocker)}
+.card .go svg{transition:transform .25s}.card:hover .go svg{transform:translateX(5px)}
+.card.plain{background:linear-gradient(140deg,var(--petrol-3),var(--petrol))}
+.card.plain::after{display:none}
+.card.plain .mark{position:absolute;right:-30px;top:-40px;font-size:15rem;font-weight:800;line-height:1;color:rgba(255,255,255,.05);z-index:0}
+@media(max-width:760px){.cards{grid-template-columns:1fr}.card{min-height:340px}}
+
+/* Projekte */
+.projects{display:grid;gap:22px;grid-template-columns:1.25fr 1fr}
+.proj{border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:0 1px 2px rgba(4,32,41,.06),0 18px 44px -26px rgba(4,32,41,.4)}
+.proj .ph{overflow:hidden;aspect-ratio:16/10}
+.proj.big .ph{aspect-ratio:16/11}
+.proj img{width:100%;height:100%;object-fit:cover;transform:scale(1.12)}
+.proj .tx{padding:26px 28px 30px}
+.proj .meta{font-size:.78rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--rot);margin-bottom:10px}
+.proj p{color:var(--muted);margin-top:10px;font-size:1rem}
+.proj ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin-top:16px}
+.proj li{font-size:.85rem;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--sand)}
+.projcol{display:grid;gap:22px}
+@media(max-width:860px){.projects{grid-template-columns:1fr}}
+
+/* Medien */
+.marquee{overflow:hidden;border-block:1px solid rgba(11,27,32,.12);padding:22px 0;margin-bottom:46px;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee div{display:flex;gap:64px;width:max-content;animation:mq 34s linear infinite;font-size:1.5rem;font-weight:650;letter-spacing:-.01em;color:rgba(11,27,32,.55);white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}
+.press{list-style:none;padding:0;border-top:1px solid rgba(11,27,32,.12)}
+.press li{display:grid;grid-template-columns:230px 1fr 150px;gap:24px;padding:22px 0;border-bottom:1px solid rgba(11,27,32,.12);align-items:baseline;transition:padding .25s,background .25s}
+.press li:hover{padding-inline:14px;background:rgba(11,27,32,.035)}
+.press .o{font-weight:800;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rot)}
+.press .t{font-weight:650;font-size:1.15rem;letter-spacing:-.01em}
+.press .d{color:var(--muted);font-size:.95rem;text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:760px){.press li{grid-template-columns:1fr;gap:4px}.press .d{text-align:left}}
+
+/* Werte */
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.value{border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;background:linear-gradient(180deg,rgba(255,255,255,.05),transparent)}
+.value svg{width:38px;height:38px;color:var(--ocker);margin-bottom:26px}
+.value p{color:rgba(255,255,255,.72);margin-top:12px;font-size:1rem}
+@media(max-width:860px){.values{grid-template-columns:1fr}}
+
+/* Über */
+.about{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,6vw,84px);align-items:center}
+.about .pic{border-radius:var(--r);overflow:hidden;aspect-ratio:4/5}
+.about .pic img{width:100%;height:100%;object-fit:cover;object-position:62% 50%;transform:scale(1.12)}
+.about blockquote{font-size:clamp(1.7rem,3.2vw,2.7rem);font-weight:650;letter-spacing:-.02em;line-height:1.12;margin-bottom:26px;text-wrap:balance}
+.about p{color:var(--muted);margin-bottom:14px}
+.about cite{font-style:normal;font-weight:700;display:block;margin:22px 0 28px}
+.about cite span{display:block;font-weight:500;color:var(--muted);font-size:.95rem}
+@media(max-width:860px){.about{grid-template-columns:1fr}.about .pic{aspect-ratio:4/3}}
+
+/* Kontakt */
+.contact{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,6vw,80px)}
+.contact p.sub{color:rgba(255,255,255,.75);margin:18px 0 30px;max-width:28em}
+.direct{font-size:.98rem;color:rgba(255,255,255,.7);line-height:1.8}
+.direct b{color:#fff}
+.panel{background:#fff;color:var(--ink);border-radius:24px;padding:clamp(24px,3.4vw,40px)}
+.panel legend{font-weight:700;margin-bottom:14px;font-size:1.05rem}
+fieldset{border:0;padding:0}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:26px}
+.choices label{position:relative;cursor:pointer}
+.choices input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.choices span{display:block;padding:15px 16px;border-radius:14px;border:1.5px solid rgba(11,27,32,.16);font-weight:650;font-size:.98rem;transition:all .2s;min-height:54px}
+.choices input:checked+span{border-color:var(--petrol);background:var(--petrol);color:#fff}
+.choices input:focus-visible+span{outline:3px solid var(--ocker);outline-offset:2px}
+.choices label:hover span{border-color:var(--petrol)}
+.hint{background:var(--sand);border-radius:14px;padding:14px 16px;font-size:.95rem;margin-bottom:22px;min-height:52px}
+.hint a{font-weight:700}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fields label{font-size:.85rem;font-weight:700;display:grid;gap:6px}
+.fields .full{grid-column:1/-1}
+.fields input,.fields textarea{font:inherit;font-size:1rem;padding:13px 14px;border-radius:12px;border:1.5px solid rgba(11,27,32,.16);background:#fff;color:var(--ink);width:100%}
+.fields input:focus,.fields textarea:focus{outline:0;border-color:var(--petrol);box-shadow:0 0 0 4px rgba(4,32,41,.1)}
+.panel .btn{width:100%;justify-content:center;margin-top:18px}
+.small{font-size:.82rem;color:var(--muted);margin-top:12px}
+.done{display:none;background:#e8f3ec;color:#14532d;border-radius:14px;padding:16px;font-weight:650;margin-top:16px}
+@media(max-width:860px){.contact{grid-template-columns:1fr}}
+@media(max-width:480px){.choices,.fields{grid-template-columns:1fr}}
+
+footer{padding:44px 0 90px;border-top:1px solid var(--line);font-size:.92rem;color:rgba(255,255,255,.6)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 34px;justify-content:space-between;align-items:center}
+footer img{height:24px}
+footer nav{display:flex;gap:24px}
+.demo-pill{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:60;background:rgba(255,255,255,.94);color:var(--ink);font-size:.8rem;font-weight:650;padding:9px 16px;border-radius:999px;box-shadow:0 8px 30px -8px rgba(0,0,0,.5);white-space:nowrap;max-width:calc(100vw - 24px);overflow:hidden;text-overflow:ellipsis}
+.demo-pill b{color:var(--rot)}
+
+.reveal{opacity:0;transform:translateY(28px)}
+.no-js .reveal,.reduced .reveal{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body class="no-js">
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" aria-label="Fritz Gruppe – Startseite"><img src="assets/logo.svg" alt="Fritz Gruppe" width="194" height="30"></a>
+    <ul>
+      <li><a href="#unternehmen">Unternehmen</a></li>
+      <li><a href="#projekte">Projekte</a></li>
+      <li><a href="#medien">Medien</a></li>
+      <li><a href="#ueber">Über Johannes Fritz</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#kontakt">Anfrage stellen</a>
+  </div>
+</header>
+
+<main id="top">
+<div class="story" id="story">
+  <div class="story-text">
+    <div class="hero">
+      <span class="eyebrow">Fritz Gruppe · Karlsruhe · seit 2011</span>
+      <h1>
+        <span class="h1-line"><span>Sanieren</span></span>
+        <span class="h1-line"><span>statt <em>abreißen.</em></span></span>
+      </h1>
+      <p class="lead">Wir bringen alte, oft leerstehende Gebäude auf einen modernen, effizienten Stand – und zurück auf den Mietmarkt. Für lebendige Stadtkerne und bezahlbaren Wohnraum.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#kontakt">Anfrage stellen
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="#unternehmen">Unternehmen ansehen</a>
+      </div>
+      <div class="proof">
+        <span><b>300+</b> Mieter</span>
+        <span><b>13</b> Gewerbebetriebe</span>
+        <span>Bekannt aus <b>SZ, WirtschaftsWoche, FR, Haufe</b></span>
+      </div>
+      <div class="scrollhint"><i></i>Scrollen und das Haus sanieren</div>
+    </div>
+
+    <div class="step" data-step="0">
+      <div class="num">01 — LEERSTAND</div>
+      <h2>Jahrhundertealte Häuser verschwinden in wenigen Wochen.</h2>
+      <p>Schneller Abriss zerstört wertvolle Bausubstanz. Innenstädte und Dorfkerne sterben aus, während im Umland Fläche verbraucht wird – der sogenannte Donut-Effekt.</p>
+    </div>
+    <div class="step" data-step="1">
+      <div class="num">02 — SANIERUNG</div>
+      <h2>Wir erhalten die Substanz und erneuern die Technik.</h2>
+      <p>Ressourcenschonende Sanierungskonzepte statt Abriss und Neubau. Bestehende Ressourcen werden genutzt, statt unnötig neue Baumaterialien zu verbrauchen.</p>
+    </div>
+    <div class="step" data-step="2">
+      <div class="num">03 — ZURÜCK AM MIETMARKT</div>
+      <h2>Effizienter Wohnraum mit historischem Charme.</h2>
+      <p>Solaranlagen und Wärmepumpen gehören in unseren Projekten dazu. So entsteht Wohnraum, der nachhaltig, wirtschaftlich und zukunftssicher ist.</p>
+      <p style="margin-top:26px"><a class="btn btn-ghost" href="#projekte">Projekte ansehen</a></p>
+    </div>
+  </div>
+
+  <div class="stage" aria-hidden="true">
+    <canvas id="scene"></canvas>
+    <div class="stage-label"><span data-l="0" class="on">Leerstand</span><span data-l="1">Sanierung</span><span data-l="2">Vermietet</span></div>
+  </div>
+</div>
+
+<div class="stats" id="zahlen">
+  <div class="reveal"><b data-count="300" data-suffix="+">300+</b><span>zufriedene Mieter</span></div>
+  <div class="reveal"><b data-count="13">13</b><span>Gewerbebetriebe in unseren Objekten</span></div>
+  <div class="reveal"><b>2011</b><span>Start der Vermietung</span></div>
+  <div class="reveal"><b>2013</b><span>erstes vollständiges Sanierungsprojekt</span></div>
+</div>
+
+<section class="light" id="unternehmen">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Unser Portfolio</span>
+      <h2>Vier Unternehmen, ein Gedanke: Bestand nutzen.</h2>
+      <p>Vom Wohnen über das Bauen bis zur Unterkunft auf Zeit – die Fritz Gruppe deckt die ganze Kette ab.</p>
+    </div>
+    <div class="cards">
+      <a class="card tilt reveal" href="#kontakt" data-intent="wohnung">
+        <img src="assets/johannes-buero.jpg" alt="Johannes Fritz am Schreibtisch mit Bauplänen" loading="lazy" width="1400" height="933">
+        <span class="tag">Wohnen</span>
+        <h3>Johannes Fritz Vermietung</h3>
+        <p>Seit 2011 bieten wir überregional vielen hundert Menschen und Familien ein Zuhause.</p>
+        <span class="go">Wohnung anfragen <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="card tilt reveal" href="https://www.133hotel.com" target="_blank" rel="noopener">
+        <img src="assets/hotel-133.jpg" alt="Beleuchtete Fassade des 133 Boutique Hotel in Karlsruhe" loading="lazy" width="1400" height="933">
+        <span class="tag">Hotel</span>
+        <h3>133 Boutique Hotel</h3>
+        <p>Urbanes Design und moderner Komfort in Karlsruhe – für Geschäftsreisende und Stadtentdecker.</p>
+        <span class="go">Zum Hotel <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="card tilt reveal" href="#kontakt" data-intent="projekt">
+        <img src="assets/hero-baustelle.jpg" alt="Johannes Fritz vor einem eingerüsteten Gebäude" loading="lazy" width="2000" height="1500">
+        <span class="tag">Bauen</span>
+        <h3>Frimmobau GmbH</h3>
+        <p>Plant und betreut energetische Sanierungsmaßnahmen – und haucht alten Bestandsgebäuden neues Leben ein.</p>
+        <span class="go">Projekt besprechen <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="card plain tilt reveal" href="https://montelio.de" target="_blank" rel="noopener">
+        <span class="mark" aria-hidden="true">M</span>
+        <span class="tag">Wohnen auf Zeit</span>
+        <h3>Montelio GmbH</h3>
+        <p>Seit 2015 ein Zuhause für hunderte Monteure während ihres Montageeinsatzes – jetzt auch mit Boardinghouse in Ettlingen.</p>
+        <span class="go">Zu Montelio <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sand" id="projekte">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Projekte</span>
+      <h2>Was aus Leerstand werden kann.</h2>
+      <p>Eine Auswahl aus den Sanierungen der letzten Jahre.</p>
+    </div>
+    <div class="projects">
+      <article class="proj big reveal">
+        <div class="ph"><img class="plx" src="assets/denkmal-1749.jpg" alt="Energetisch saniertes Denkmalobjekt mit gelber Fassade und roten Fensterläden" loading="lazy" width="1400" height="1050"></div>
+        <div class="tx">
+          <div class="meta">Denkmalobjekt · Baujahr 1749</div>
+          <h3>Energetisch saniert, Charakter erhalten</h3>
+          <p>Alte Bausubstanz und moderne Sanierungsverfahren – ein Haus mit Geschichte, das wieder bewohnt wird.</p>
+          <ul><li>Denkmal</li><li>Energetische Sanierung</li><li>Wärmepumpe</li></ul>
+        </div>
+      </article>
+      <div class="projcol">
+        <article class="proj reveal">
+          <div class="ph"><img class="plx" src="assets/denkmal-2.jpg" alt="Sanierte Wohnung mit freigelegten Holzbalken und Stahltreppe" loading="lazy" width="1400" height="787"></div>
+          <div class="tx">
+            <div class="meta">Landau-Dammheim · „Zum Schwanen“</div>
+            <h3>13 klimafreundliche Wohnungen im ehemaligen Hotel</h3>
+            <ul><li>ISB-Förderung</li><li>Bezahlbarer Wohnraum</li></ul>
+          </div>
+        </article>
+        <article class="proj reveal">
+          <div class="tx">
+            <div class="meta">Ettlingen · Boardinghouse</div>
+            <h3>Vom Gewerbeobjekt zum Zuhause auf Zeit</h3>
+            <p>Eröffnet Ende Januar 2026, Platz für bis zu 52 Personen.</p>
+            <ul><li>Montelio</li><li>Umnutzung</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="medien">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Johannes Fritz in den Medien</span>
+      <h2>Eine Stimme für den Bestand.</h2>
+    </div>
+  </div>
+  <div class="marquee" aria-hidden="true"><div>
+    <span>Süddeutsche Zeitung</span><span>WirtschaftsWoche</span><span>Frankfurter Rundschau</span><span>Haufe</span><span>immobilienmanager</span><span>BNN</span><span>Frankfurter Neue Presse</span><span>DIE RHEINPFALZ</span>
+    <span>Süddeutsche Zeitung</span><span>WirtschaftsWoche</span><span>Frankfurter Rundschau</span><span>Haufe</span><span>immobilienmanager</span><span>BNN</span><span>Frankfurter Neue Presse</span><span>DIE RHEINPFALZ</span>
+  </div></div>
+  <div class="wrap">
+    <ul class="press">
+      <li class="reveal"><span class="o">Haufe</span><span class="t">Blackout: Was Vermieter wissen sollten</span><span class="d">13. Januar 2026</span></li>
+      <li class="reveal"><span class="o">BNN</span><span class="t">Weder Wohnung noch Hotel: Firma Montelio eröffnet Boardinghouse in Ettlingen</span><span class="d">12. Januar 2026</span></li>
+      <li class="reveal"><span class="o">WirtschaftsWoche</span><span class="t">KfW-Förderung: „Eigentlich ist jeder dumm, der dieses Jahr mit Bauen angefangen hat“</span><span class="d">27. Oktober 2025</span></li>
+      <li class="reveal"><span class="o">Frankfurter Neue Presse</span><span class="t">Wohnraum ohne Neubau – wie Umnutzung aus Leerstand Lebensraum macht</span><span class="d">11. August 2025</span></li>
+      <li class="reveal"><span class="o">Frankfurter Rundschau</span><span class="t">Immobilieninvestoren in der Kritik? Johannes Fritz räumt mit Vorurteilen auf</span><span class="d">10. Juni 2025</span></li>
+      <li class="reveal"><span class="o">Süddeutsche Zeitung</span><span class="t">Johannes Fritz: Wie er durch Aufklärung und Kooperation die Branche verändert</span><span class="d">06. Juni 2025</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="werte">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Unsere Werte</span>
+      <h2>Weil wir schon heute an unsere Zukunft denken.</h2>
+    </div>
+    <div class="values">
+      <div class="value reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V11M12 11c0-4 3-7 8-7 0 5-3 8-8 7zM12 14c0-3-2.5-5-7-5 0 4 2.5 6 7 5z"/></svg>
+        <h3>Nachhaltigkeit</h3>
+        <p>Ressourcenschonende Sanierungskonzepte statt Abriss und Neubau – mit Solaranlagen und Wärmepumpen.</p>
+      </div>
+      <div class="value reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 9.2a3.6 3.6 0 1 0 0 5.6M7 11h5M7 13.4h5"/></svg>
+        <h3>Faire Löhne</h3>
+        <p>Transparente und faire Vergütungsmodelle, die Leistung honorieren und langfristige Perspektiven schaffen.</p>
+      </div>
+      <div class="value reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h11v8H9l-5 4zM15 9h5v11l-4-3h-5v-4"/></svg>
+        <h3>Kommunikation auf Augenhöhe</h3>
+        <p>Offener, respektvoller Austausch mit Kunden und Mietern – für eine vertrauensvolle, langfristige Zusammenarbeit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="ueber">
+  <div class="wrap about">
+    <div class="pic reveal"><img class="plx" src="assets/hero-baustelle.jpg" alt="Johannes Fritz auf einer Baustelle vor einem eingerüsteten Gebäude" loading="lazy" width="2000" height="1500"></div>
+    <div class="reveal">
+      <span class="eyebrow">Über Johannes Fritz</span>
+      <blockquote>„Wir beleben alte Gebäude und schaffen modernen Wohnraum.“</blockquote>
+      <p>2010 lernte Johannes Fritz als Agenturinhaber die Immobilienbranche kennen. Was als Nebentätigkeit begann, wurde zur Leidenschaft und schließlich zum Beruf. 2013 folgte das erste vollständige Sanierungsprojekt – viele weitere kamen dazu.</p>
+      <p>Heute profitieren über 300 Mieter und 13 Gewerbebetriebe von den Investitionen und Projekten der Fritz Gruppe.</p>
+      <cite>Johannes Fritz<span>Gründer der Fritz Gruppe</span></cite>
+      <a class="btn btn-dark" href="#kontakt">Kontakt aufnehmen</a>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt">
+  <div class="wrap contact">
+    <div class="reveal">
+      <span class="eyebrow">Kontakt</span>
+      <h2>Worum geht es bei Ihnen?</h2>
+      <p class="sub">Wählen Sie Ihr Anliegen – Ihre Nachricht landet direkt bei der richtigen Stelle in der Fritz Gruppe.</p>
+      <p class="direct"><b>Fritz Gruppe</b><br>Steinhäuserstraße 2<br>76135 Karlsruhe</p>
+    </div>
+    <form class="panel reveal" id="form" novalidate>
+      <fieldset>
+        <legend>1. Ihr Anliegen</legend>
+        <div class="choices">
+          <label><input type="radio" name="intent" value="wohnung" checked><span>Wohnung mieten</span></label>
+          <label><input type="radio" name="intent" value="monteur"><span>Unterkunft für Monteure</span></label>
+          <label><input type="radio" name="intent" value="projekt"><span>Gebäude oder Projekt vorstellen</span></label>
+          <label><input type="radio" name="intent" value="presse"><span>Presse &amp; Sonstiges</span></label>
+        </div>
+      </fieldset>
+      <div class="hint" id="hint" aria-live="polite"></div>
+      <fieldset>
+        <legend>2. Ihre Daten</legend>
+        <div class="fields">
+          <label>Name<input name="name" autocomplete="name" required></label>
+          <label>Telefon<input name="tel" type="tel" autocomplete="tel"></label>
+          <label class="full">E-Mail<input name="email" type="email" autocomplete="email" required></label>
+          <label class="full">Nachricht<textarea name="msg" rows="3"></textarea></label>
+        </div>
+      </fieldset>
+      <button class="btn btn-dark" type="submit">Anfrage senden</button>
+      <p class="small">Designentwurf: Das Formular versendet keine Daten.</p>
+      <div class="done" id="done" role="status">So würde es sich anfühlen: Anfrage angekommen, Antwort mit festem Ansprechpartner.</div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="assets/logo.svg" alt="Fritz Gruppe" width="155" height="24">
+    <span>Steinhäuserstraße 2 · 76135 Karlsruhe</span>
+    <nav><a href="#top">Impressum</a><a href="#top">Datenschutz</a></nav>
+  </div>
+</footer>
+
+<div class="demo-pill"><b>Designentwurf</b> von Y Ventures · nicht die offizielle Website der Fritz Gruppe</div>
+
+<script src="assets/three.min.js"></script>
+<script src="assets/gsap.min.js"></script>
+<script src="assets/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.body.classList.remove('no-js');
+if(reduced) document.body.classList.add('reduced');
+gsap.registerPlugin(ScrollTrigger);
+
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 30), {passive:true});
+
+/* ---------- 3D-Haus ---------- */
+const canvas = document.getElementById('scene');
+const stage = canvas.parentElement;
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(32, 1, .1, 100);
+
+const hemi = new THREE.HemisphereLight(0x9fc4d0, 0x0a2630, .7);
+scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xbfd6e0, .7);
+sun.position.set(5, 8, 6);
+sun.castShadow = true;
+sun.shadow.mapSize.set(1024, 1024);
+Object.assign(sun.shadow.camera, {left:-7, right:7, top:7, bottom:-7, near:1, far:25});
+scene.add(sun);
+
+const C = h => new THREE.Color(h);
+const mat = (c, o = {}) => new THREE.MeshStandardMaterial(Object.assign({color:c, roughness:.85, flatShading:true}, o));
+const box = (w, h, d, m, x = 0, y = 0, z = 0, parent) => {
+  const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m);
+  o.position.set(x, y, z); o.castShadow = o.receiveShadow = true;
+  (parent || house).add(o); return o;
+};
+
+const house = new THREE.Group();
+scene.add(house);
+const W = 4.6, H = 2.7, D = 2.8;
+
+const ground = new THREE.Mesh(new THREE.CylinderGeometry(4.7, 4.7, .16, 64), mat(0x0e3a47, {flatShading:false}));
+ground.position.y = -.08; ground.receiveShadow = true; house.add(ground);
+
+const mWall = mat(0x7a756c), mSockel = mat(0x55514b), mRoof = mat(0x4b4642);
+const mFrame = mat(0x8e8a82), mGlass = mat(0x18242a, {emissive:0xffd58a, emissiveIntensity:0, roughness:.3});
+const mDoor = mat(0x4a4038), mShutter = mat(0x8c2332);
+box(W, H, D, mWall, 0, H/2, 0);
+box(W + .06, .5, D + .06, mSockel, 0, .25, 0);
+
+const rs = new THREE.Shape();
+rs.moveTo(-D/2 - .25, 0); rs.lineTo(D/2 + .25, 0); rs.lineTo(0, 1.55); rs.closePath();
+const rg = new THREE.ExtrudeGeometry(rs, {depth: W + .5, bevelEnabled:false});
+rg.translate(0, 0, -(W + .5)/2); rg.rotateY(Math.PI/2);
+const roof = new THREE.Mesh(rg, mRoof); roof.position.y = H; roof.castShadow = true; house.add(roof);
+box(.34, .9, .34, mSockel, 1.3, H + 1.25, -.5);
+
+const shutters = [], boards = [];
+const mBoard = mat(0x5d4a37, {transparent:true});
+const fz = D/2;
+for(let r = 0; r < 2; r++) for(let c = 0; c < 4; c++){
+  const x = -1.65 + c*1.1, y = .98 + r*1.12;
+  if(r === 0 && c === 1){ box(.66, 1.2, .08, mFrame, x, .9, fz); box(.52, 1.06, .1, mDoor, x, .85, fz + .01); continue; }
+  box(.6, .8, .08, mFrame, x, y, fz);
+  box(.46, .66, .1, mGlass, x, y, fz + .01);
+  for(const s of [-1, 1]){ const sh = box(.2, .74, .05, mShutter, x + s*.42, y, fz + .03); sh.userData.s = s; shutters.push(sh); }
+  if((r + c) % 2 === 0){
+    const b1 = box(.74, .12, .04, mBoard, x, y + .1, fz + .09); b1.rotation.z = .35;
+    const b2 = box(.74, .12, .04, mBoard, x, y - .08, fz + .09); b2.rotation.z = -.3;
+    boards.push(b1, b2);
+  }
+}
+for(const z of [-.6, .6]) for(const y of [1.0, 2.1]){ box(.08, .7, .5, mFrame, W/2, y, z); box(.1, .56, .38, mGlass, W/2 + .01, y, z); }
+
+const slope = Math.atan(1.55/(D/2 + .25));
+const mPatch = mat(0x1d1b1a, {transparent:true});
+const patches = new THREE.Group(); patches.position.set(0, H + .82, .86); patches.rotation.x = slope; house.add(patches);
+[[-1.5, -.2, .7, .5], [.6, .25, .9, .4], [1.7, -.3, .5, .6]].forEach(p => box(p[2], .03, p[3], mPatch, p[0], .04, p[1], patches));
+
+const solar = new THREE.Group(); solar.position.copy(patches.position); solar.rotation.x = slope; house.add(solar);
+const mSolar = mat(0x12305c, {roughness:.25, metalness:.5});
+for(let r = 0; r < 2; r++) for(let c = 0; c < 5; c++) box(.66, .04, .5, mSolar, -1.5 + c*.72, .06, -.3 + r*.56, solar);
+
+const mPole = new THREE.MeshStandardMaterial({color:0xd5dde0, transparent:true, roughness:.5});
+const mPlank = mat(0xb08a55, {transparent:true});
+const scaffold = new THREE.Group(); house.add(scaffold);
+const sz = fz + .55;
+for(let i = 0; i < 6; i++){
+  const x = -W/2 - .2 + i*((W + .4)/5);
+  for(const z of [sz, sz - .4]){
+    const p = new THREE.Mesh(new THREE.CylinderGeometry(.028, .028, 3.6, 6), mPole);
+    p.position.set(x, 1.8, z); scaffold.add(p);
+  }
+}
+for(const y of [1.15, 2.3, 3.45]){
+  const p = new THREE.Mesh(new THREE.CylinderGeometry(.024, .024, W + .4, 6), mPole);
+  p.rotation.z = Math.PI/2; p.position.set(0, y, sz); scaffold.add(p);
+  if(y < 3) box(W + .4, .04, .4, mPlank, 0, y - .5, sz - .2, scaffold);
+}
+
+box(.7, .7, .36, mat(0xdfe4e6), W/2 + .45, .35, -.6).userData.hp = 1;
+const hp = house.children[house.children.length - 1];
+const trees = [];
+[[-3.1, 1.6, 1], [3.3, 1.5, .8], [-3.3, -1.2, .7]].forEach(t => {
+  const g = new THREE.Group(); g.position.set(t[0], 0, t[1]);
+  box(.14, .5, .14, mat(0x5b4631), 0, .25, 0, g);
+  const cone = new THREE.Mesh(new THREE.ConeGeometry(.5, 1.5, 7), mat(0x3f7d5a));
+  cone.position.y = 1.2; cone.castShadow = true; g.add(cone);
+  g.userData.k = t[2]; house.add(g); trees.push(g);
+});
+
+const col = {
+  wall:[C(0x7a756c), C(0xecd28a)], sockel:[C(0x55514b), C(0x8c2332)], roof:[C(0x4b4642), C(0xb5512e)],
+  frame:[C(0x8e8a82), C(0xf6f3ec)], door:[C(0x4a4038), C(0x8c2332)], glass:[C(0x18242a), C(0x394a52)],
+  sun:[C(0xbfd6e0), C(0xffe2b0)], ground:[C(0x0e3a47), C(0x1b5560)]
+};
+const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a)/(b - a))); return t*t*(3 - 2*t); };
+const fade = (m, o) => { m.opacity = o; };
+let progress = reduced ? 1 : 0, shown = -1, mx = 0, my = 0, tmx = 0, tmy = 0;
+const labels = document.querySelectorAll('.stage-label span');
+
+function apply(p){
+  const paint = ss(.34, .7, p);
+  mWall.color.lerpColors(col.wall[0], col.wall[1], paint);
+  mSockel.color.lerpColors(col.sockel[0], col.sockel[1], paint);
+  mRoof.color.lerpColors(col.roof[0], col.roof[1], ss(.4, .72, p));
+  mFrame.color.lerpColors(col.frame[0], col.frame[1], paint);
+  mDoor.color.lerpColors(col.door[0], col.door[1], paint);
+  mGlass.color.lerpColors(col.glass[0], col.glass[1], paint);
+  mGlass.emissiveIntensity = ss(.72, .98, p)*.85;
+  ground.material.color.lerpColors(col.ground[0], col.ground[1], ss(.6, 1, p));
+  const bo = 1 - ss(.14, .36, p);
+  fade(mBoard, bo); boards.forEach(b => b.visible = bo > .01);
+  fade(mPatch, 1 - ss(.36, .56, p)); patches.visible = mPatch.opacity > .01;
+  const so = ss(.12, .28, p)*(1 - ss(.62, .78, p));
+  fade(mPole, so); fade(mPlank, so); scaffold.visible = so > .01;
+  scaffold.position.y = (1 - ss(.12, .28, p))*-.6;
+  const sh = ss(.64, .82, p);
+  shutters.forEach(s => { s.scale.x = Math.max(.001, sh); s.visible = sh > .01; });
+  const sl = ss(.72, .9, p);
+  solar.scale.setScalar(Math.max(.001, sl)); solar.visible = sl > .01;
+  const h = ss(.78, .92, p); hp.scale.setScalar(Math.max(.001, h)); hp.visible = h > .01;
+  trees.forEach(t => { const k = ss(.8, 1, p)*t.userData.k; t.scale.setScalar(Math.max(.001, k)); t.visible = k > .01; });
+  hemi.intensity = .7 + ss(.3, 1, p)*.3;
+  sun.intensity = .65 + ss(.3, 1, p)*.6;
+  sun.color.lerpColors(col.sun[0], col.sun[1], ss(.4, 1, p));
+  const idx = p < .14 ? 0 : p < .8 ? 1 : 2;
+  if(idx !== shown){ shown = idx; labels.forEach((l, i) => l.classList.toggle('on', i === idx)); }
+}
+
+function size(){
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w/h;
+  const narrow = w/h < 1;
+  camera.fov = narrow ? 44 : 32;
+  camera.position.set(0, narrow ? 4.2 : 4.6, narrow ? 13.5 : 14.5);
+  camera.lookAt(0, 1.55, 0);
+  camera.updateProjectionMatrix();
+}
+size(); addEventListener('resize', size);
+
+let visible = true;
+new IntersectionObserver(e => visible = e[0].isIntersecting).observe(stage);
+if(!reduced) addEventListener('pointermove', e => { tmx = e.clientX/innerWidth - .5; tmy = e.clientY/innerHeight - .5; }, {passive:true});
+
+let cur = progress;
+function frame(t){
+  requestAnimationFrame(frame);
+  if(!visible) return;
+  cur += (progress - cur)*.09;
+  mx += (tmx - mx)*.05; my += (tmy - my)*.05;
+  apply(cur);
+  house.rotation.y = -.62 + cur*.95 + mx*.35 + (reduced ? 0 : Math.sin(t*.0004)*.04);
+  house.rotation.x = my*.08;
+  house.position.y = -.2 + (reduced ? 0 : Math.sin(t*.0009)*.04);
+  renderer.render(scene, camera);
+}
+requestAnimationFrame(frame);
+
+if(!reduced){
+  const mob = matchMedia('(max-width:860px)').matches;
+  ScrollTrigger.create({trigger: mob ? '.stage' : '#story', start: mob ? 'top 58px' : 'top top', endTrigger:'#story', end:'bottom bottom', onUpdate:s => { const v = s.progress; progress = Math.min(1, mob ? Math.pow(v, 1.4)*1.15 : v < .4 ? v*.3 : .12 + (v - .4)/.55); }});
+
+  gsap.from('.h1-line>span', {yPercent:110, duration:1.1, ease:'power4.out', stagger:.12, delay:.15});
+  gsap.from('.hero .eyebrow, .hero .lead, .hero .cta, .hero .proof, .scrollhint', {opacity:0, y:20, duration:.8, ease:'power2.out', stagger:.09, delay:.55});
+  gsap.from(house.scale, {x:.6, y:.6, z:.6, duration:1.6, ease:'power3.out'});
+
+  gsap.utils.toArray('.step').forEach(s => gsap.from(s.children, {opacity:0, y:34, duration:.8, ease:'power2.out', stagger:.1, scrollTrigger:{trigger:s, start:'top 72%'}}));
+  ScrollTrigger.batch('.reveal', {start:'top 88%', once:true, onEnter:b => gsap.to(b, {opacity:1, y:0, duration:.9, ease:'power3.out', stagger:.09, overwrite:true})});
+  gsap.utils.toArray('.plx').forEach(i => gsap.fromTo(i, {yPercent:-5}, {yPercent:5, ease:'none', scrollTrigger:{trigger:i.parentElement, start:'top bottom', end:'bottom top', scrub:true}}));
+
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const end = +el.dataset.count, o = {v:0};
+    ScrollTrigger.create({trigger:el, start:'top 90%', once:true, onEnter:() => gsap.to(o, {v:end, duration:1.6, ease:'power2.out', onUpdate:() => el.textContent = Math.round(o.v) + (el.dataset.suffix || '')})});
+  });
+
+  if(matchMedia('(hover:hover)').matches) document.querySelectorAll('.tilt').forEach(c => {
+    c.addEventListener('pointermove', e => {
+      const r = c.getBoundingClientRect(), x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5;
+      c.style.transform = `rotateY(${x*7}deg) rotateX(${-y*7}deg) translateZ(8px)`;
+    });
+    c.addEventListener('pointerleave', () => c.style.transform = '');
+  });
+}
+
+/* ---------- Kontakt-Weiche ---------- */
+const hints = {
+  wohnung:'Sagen Sie uns kurz Ort, Größe und Einzugstermin – wir melden uns mit passenden Wohnungen.',
+  monteur:'Unterkünfte für Monteure laufen über Montelio. Anfragen mit Zeitraum und Personenzahl oder direkt auf <a href="https://montelio.de" target="_blank" rel="noopener">montelio.de</a>.',
+  projekt:'Ein leerstehendes oder sanierungsbedürftiges Gebäude? Schicken Sie uns Ort und Eckdaten.',
+  presse:'Interview, Gastbeitrag oder eine andere Frage – schreiben Sie uns.'
+};
+const hint = document.getElementById('hint'), form = document.getElementById('form');
+const setHint = () => hint.innerHTML = hints[form.intent.value];
+form.addEventListener('change', e => { if(e.target.name === 'intent') setHint(); });
+setHint();
+document.querySelectorAll('[data-intent]').forEach(a => a.addEventListener('click', () => {
+  form.querySelector(`[value="${a.dataset.intent}"]`).checked = true; setHint();
+}));
+form.addEventListener('submit', e => { e.preventDefault(); document.getElementById('done').style.display = 'block'; });
+})();
+</script>
+</body>
+</html>

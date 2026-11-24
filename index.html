@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Angebot für die Fritz Gruppe – Y Ventures</title>
+<meta name="description" content="Prüfung von fritzgruppe.net, fertiger Entwurf und Festpreis-Angebot von Y Ventures.">
+<style>
+/* Layout: Prüfbericht. Schmale Lesespalte, Befunde als Protokollzeilen mit Einstufung, dunkles Band für den Entwurf. */
+:root{
+  --bg:#f5f5f3; --surface:#ffffff; --ink:#131314; --muted:#5a5a5f; --line:#dcdcd8;
+  --dark:#042029; --dark-2:#0b303c; --dark-line:#1d4753; --dark-muted:#a9bec4;
+  --red:#0e5a6b; --red-ink:#0e5a6b;
+  --hoch:#b3261e; --mittel:#8a5a00; --niedrig:#2f6b4a;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0f0f10; --surface:#18181a; --ink:#ececee; --muted:#a3a3a9; --line:#2c2c30;
+  --red:#2f93a8; --red-ink:#6cc3d6;
+  --hoch:#ff8a80; --mittel:#f2c264; --niedrig:#8fd0aa; color-scheme:dark;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{max-width:940px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.9rem,5vw,3rem);letter-spacing:-.02em;font-weight:750}
+h2{font-size:clamp(1.35rem,3vw,1.75rem);letter-spacing:-.01em}
+h3{font-size:1.05rem}
+p{margin:0}
+.label{font:600 .72rem/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+.top{background:var(--dark);color:#fff;padding-block:44px 48px;border-top:5px solid #e2b04a}
+.top .label{color:var(--dark-muted)}
+.top h1{margin-top:14px;max-width:20ch}
+.top .lead{margin-top:16px;max-width:62ch;color:#d9d9dd;font-size:1.06rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--dark-line);margin-top:32px;border:1px solid var(--dark-line)}
+.facts div{background:var(--dark);padding:14px 16px}
+.facts dt{font:600 .7rem/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dark-muted)}
+.facts dd{margin:6px 0 0;font-size:1.25rem;font-weight:650}
+.facts dd small{display:block;font-size:.8rem;font-weight:400;color:#c9c9ce;margin-top:2px}
+dl{margin:0}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;background:var(--red);color:#fff;font-weight:650;text-decoration:none;transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.12)}
+.btn:active{transform:scale(.97)}
+.btn:focus-visible,a:focus-visible{outline:3px solid #e2b04a;outline-offset:3px}
+.btn svg{width:16px;height:16px}
+.top .btn{margin-top:28px}
+
+section{padding-block:48px}
+section + section{border-top:1px solid var(--line)}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.sec-head p{color:var(--muted);max-width:65ch}
+
+.group{margin-top:28px}
+.group h3{padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.find{display:grid;grid-template-columns:92px minmax(0,1fr);gap:6px 18px;padding:16px 0;border-bottom:1px solid var(--line)}
+.find .sev{font:700 .72rem/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding-top:3px}
+.sev.hoch{color:var(--hoch)} .sev.mittel{color:var(--mittel)} .sev.niedrig{color:var(--niedrig)}
+.find strong{display:block}
+.find p{color:var(--muted);margin-top:4px;max-width:68ch}
+.find code{font:.86em var(--mono);background:var(--surface);border:1px solid var(--line);padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
+.find .fix{color:var(--ink);margin-top:6px}
+.find .fix::before{content:"Lösung: ";font-weight:650}
+@media (max-width:560px){.find{grid-template-columns:1fr}}
+
+.good{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 28px;padding:0;margin:0;list-style:none}
+.good li{padding-left:18px;position:relative;color:var(--muted)}
+.good li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;background:var(--niedrig)}
+.good b{color:var(--ink);font-weight:650}
+
+.shots{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:640px){.shots{grid-template-columns:1fr}}
+figure{margin:0}
+figure img{border:1px solid var(--line);width:100%}
+figcaption{font-size:.86rem;color:var(--muted);margin-top:8px}
+
+.band{background:var(--dark);color:#fff;padding-block:48px;border:0}
+.band + section{border-top:0}
+.band .label{color:var(--dark-muted)}
+.band .sec-head p{color:#d2d2d7}
+.band figure img{border-color:var(--dark-line);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.band figcaption{color:var(--dark-muted)}
+.band .shots{margin-top:8px}
+.band .row{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;margin-top:26px}
+.band .note{font-size:.88rem;color:var(--dark-muted);max-width:56ch}
+.what{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--dark-line);border:1px solid var(--dark-line);margin-top:28px;padding:0;list-style:none}
+.what li{background:var(--dark);padding:16px 18px;color:#d2d2d7;font-size:.94rem}
+.what b{display:block;color:#fff;margin-bottom:4px}
+
+.scope{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px 32px}
+.scope h3{margin-bottom:8px}
+.scope ul{margin:0;padding-left:18px;color:var(--muted)}
+.scope li{margin-top:4px}
+.price{margin-top:32px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--red);padding:24px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 32px;align-items:center}
+.price .sum{font-size:clamp(2rem,6vw,2.8rem);font-weight:750;letter-spacing:-.02em;line-height:1}
+.price .sum small{display:block;font-size:.85rem;font-weight:400;color:var(--muted);letter-spacing:0;margin-top:8px}
+.price p{color:var(--muted);max-width:52ch;margin-top:6px}
+@media (max-width:600px){.price{grid-template-columns:1fr}}
+.cond{margin-top:18px;color:var(--muted);font-size:.94rem;max-width:70ch}
+.cond b{color:var(--ink)}
+
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:20px 28px}
+.steps li{counter-increment:s;border-top:2px solid var(--ink);padding-top:12px;color:var(--muted)}
+.steps li::before{content:counter(s,decimal-leading-zero);font:700 .8rem var(--mono);color:var(--red-ink);display:block;margin-bottom:6px}
+.steps b{color:var(--ink);display:block}
+
+footer{padding-block:32px 56px;color:var(--muted);font-size:.86rem;border-top:1px solid var(--line)}
+footer p + p{margin-top:8px}
+
+.band .btn,.top .btn{background:#e2b04a;color:#042029}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:32px}
+.opt{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:10px}
+.opt.rec{border-top-color:#e2b04a}
+.opt .sum{font-size:clamp(2rem,6vw,2.6rem);font-weight:750;letter-spacing:-.02em;line-height:1;margin-top:6px}
+.opt .sum small{display:block;font-size:.85rem;font-weight:400;color:var(--muted);letter-spacing:0;margin-top:8px}
+.opt ul{margin:6px 0 0;padding-left:18px;color:var(--muted)}
+.opt li{margin-top:4px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:640px){.pair{grid-template-columns:1fr}}
+.what{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <p class="label">Angebot · Y Ventures · 24.11.2026</p>
+  <h1>Eine neue Website für die Fritz Gruppe</h1>
+  <p class="lead">Wir haben fritzgruppe.net geprüft, 20 Befunde festgehalten und einen Entwurf gebaut, den Sie sofort ausprobieren können: mit einem 3D-Haus, das sich beim Scrollen vom Leerstand zum sanierten Gebäude verwandelt.</p>
+  <dl class="facts">
+    <div><dt>Geprüft</dt><dd>24.11.2026<small>Startseite und 8 Unterseiten</small></dd></div>
+    <div><dt>Befunde</dt><dd class="num">20<small>davon 9 mit hoher Priorität</small></dd></div>
+    <div><dt>Entwurf</dt><dd>fertig gebaut<small>zum Ausprobieren</small></dd></div>
+    <div><dt>Festpreis</dt><dd class="num">ab 1.900 €<small>netto, einmalig</small></dd></div>
+  </dl>
+  <a class="btn" href="vorschau/">Entwurf ansehen <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+</div></header>
+
+<main>
+<section><div class="wrap">
+  <div class="sec-head"><p class="label">Kurzfassung</p><h2>Die Substanz ist gut. Die Seite zeigt sie nicht.</h2>
+  <p>Die Fritz Gruppe hat, was viele Unternehmen sich wünschen: eine klare Haltung, echte Projekte und Presse von der Süddeutschen bis zur WirtschaftsWoche. Auf der Website muss man danach suchen. Der erste Bildschirm sagt nicht, was Sie tun, und wer anfragen will, findet nur ein allgemeines Formular.</p></div>
+  <ul class="good">
+    <li><b>Verschlüsselt und schnell erreichbar.</b> Der Server antwortet in 0,14 Sekunden.</li>
+    <li><b>Am Handy lesbar.</b> Die Seite passt sich der Bildschirmbreite an.</li>
+    <li><b>Eigene Fotos statt Stockbilder.</b> Baustellen, Objekte und Johannes Fritz selbst.</li>
+    <li><b>Starke Presse.</b> Elf Beiträge aus 2025 und 2026 sind verlinkt.</li>
+    <li><b>Klare Marke.</b> Logo, Farbe und Schrift sind eigenständig.</li>
+    <li><b>Keine Schriften von Google-Servern.</b> Im Quelltext findet sich kein Abruf bei Google Fonts.</li>
+  </ul>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><p class="label">Ist-Zustand</p><h2>So sieht die Seite heute aus</h2></div>
+  <div class="shots">
+    <figure><img src="img/heute-start.jpg" alt="Startseite von fritzgruppe.net: ein Foto ohne Überschrift und ohne Knopf" width="1443" height="767"><figcaption>Startseite am 24.11.2026. Der erste Bildschirm besteht aus einem Foto.</figcaption></figure>
+    <figure><img src="img/heute-kontakt2.jpg" alt="Musterseite mit der Adresse 123 Main Street, New York" width="577" height="307"><figcaption>Öffentliche Musterseite unter /kontakt-2/ mit New Yorker Beispieladresse.</figcaption></figure>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><p class="label">Prüfprotokoll</p><h2>20 Befunde, nach Bereich geordnet</h2>
+  <p>Jeder Befund ist am 24.11.2026 an der Live-Seite geprüft worden. Die Einstufung zeigt, wie stark er Anfragen, Auffindbarkeit oder Rechtssicherheit betrifft.</p></div>
+  <div class="group"><h3>Auffindbarkeit bei Google</h3><div class="find"><span class="sev hoch">Hoch</span><div><strong>Die Startseite hat keine Hauptüberschrift</strong><p>Im Quelltext der Startseite steht keine <code>h1</code>. Der Seitentitel lautet „Home - Fritz Gruppe“. Google erfährt dadurch nicht, wofür die Seite stehen soll.</p><p class="fix">Eine klare Hauptüberschrift und ein Seitentitel mit Leistung und Ort, zum Beispiel „Sanieren statt abreißen – Fritz Gruppe Karlsruhe“.</p></div></div><div class="find"><span class="sev hoch">Hoch</span><div><strong>Musterseiten des Baukastens sind öffentlich</strong><p>Unter <code>/kontakt-2/</code>, <code>/portfolio/</code> und <code>/about/</code> stehen englische Beispielseiten, unter anderem mit der Adresse „123 Main Street, New York“ und <code>contact@mysite.com</code>. Alle drei sind in der Sitemap eingetragen und werden Google damit zur Aufnahme gemeldet.</p><p class="fix">Musterseiten löschen und aus der Sitemap nehmen.</p></div></div><div class="find"><span class="sev mittel">Mittel</span><div><strong>Die Beschreibung für Suchergebnisse bricht mitten im Satz ab</strong><p>Als Beschreibung ist der Anfang des Fließtexts hinterlegt. Sie endet mit „… ist heute zu meinem“.</p><p class="fix">Eigene Beschreibung in zwei Sätzen je Seite.</p></div></div><div class="find"><span class="sev mittel">Mittel</span><div><strong>Google bekommt keine Unternehmensdaten</strong><p>Die strukturierten Daten enthalten nur Website, Seite, Person und Artikel. Eine Angabe zum Unternehmen mit Anschrift und Tätigkeitsfeldern fehlt.</p><p class="fix">Strukturierte Daten für die Fritz Gruppe und ihre vier Bereiche ergänzen.</p></div></div><div class="find"><span class="sev niedrig">Niedrig</span><div><strong>6 von 18 Bildern haben keinen Beschreibungstext</strong><p>Ohne Alt-Text können weder Google noch Vorleseprogramme die Bilder einordnen.</p><p class="fix">Alt-Texte für alle Bilder.</p></div></div></div><div class="group"><h3>Inhalte und Anfragen</h3><div class="find"><span class="sev hoch">Hoch</span><div><strong>Der erste Bildschirm sagt nicht, was die Fritz Gruppe macht</strong><p>Oben steht ein Foto ohne Text und ohne Knopf. Wer die Seite zum ersten Mal öffnet, muss scrollen, um zu verstehen, worum es geht.</p><p class="fix">Eine Aussage in einem Satz, ein Knopf zur Anfrage und die wichtigsten Belege direkt darunter.</p></div></div><div class="find"><span class="sev hoch">Hoch</span><div><strong>Die stärksten Belege stehen ganz unten</strong><p>„Über 300 zufriedene Mieter und 13 Gewerbebetriebe“ steht im letzten Absatz eines langen Textes. Die Startseite ist am Bildschirm rund 8.200 Pixel hoch.</p><p class="fix">Zahlen und Pressenennungen auf den ersten Bildschirm holen.</p></div></div><div class="find"><span class="sev hoch">Hoch</span><div><strong>Ein Formular für alle Anliegen</strong><p>Wohnungssuchende, Firmen mit Monteuren, Eigentümer und Journalisten landen im selben Formular mit fünf Feldern. Wer ein Monteurzimmer sucht, erfährt nicht, dass Montelio dafür zuständig ist.</p><p class="fix">Eine Weiche mit vier Anliegen. Jede Anfrage geht an die richtige Stelle, und der Besucher weiß, was als Nächstes passiert.</p></div></div><div class="find"><span class="sev hoch">Hoch</span><div><strong>Keine Telefonnummer</strong><p>Auf Startseite, Kontaktseite und im Impressum steht keine Telefonnummer.</p><p class="fix">Telefonnummer in Kopf, Kontaktbereich und Impressum, am Handy antippbar.</p></div></div><div class="find"><span class="sev mittel">Mittel</span><div><strong>Drei verschiedene E-Mail-Adressen</strong><p>Im Fuß steht <code>vermietung@johannesfritz.net</code>, im Impressum <code>vermietung@johannesfritz.de</code>, und im Quelltext der Startseite ist ein Link auf <code>contact@mysite.com</code> hinterlegt.</p><p class="fix">Eine Adresse festlegen und überall einheitlich verwenden.</p></div></div><div class="find"><span class="sev mittel">Mittel</span><div><strong>Zwei der vier Unternehmen haben keinen nächsten Schritt</strong><p>Hotel und Montelio haben einen Knopf „mehr erfahren“. Bei der Vermietung und bei Frimmobau endet der Abschnitt ohne Link oder Kontaktmöglichkeit.</p><p class="fix">Jeder Bereich bekommt einen eigenen Knopf: Wohnung anfragen, Projekt besprechen.</p></div></div><div class="find"><span class="sev mittel">Mittel</span><div><strong>Projekte sind schwer zu finden</strong><p>Der Menüpunkt „Impressionen“ führt auf eine Seite mit der Überschrift „Über mich“, die Lebenslauf, Politik und Privates enthält. Sanierungsprojekte wie Dammheim oder das Boardinghouse in Ettlingen erscheinen nur als Presseartikel.</p><p class="fix">Ein eigener Bereich „Projekte“ mit Bild, Ort und Eckdaten.</p></div></div><div class="find"><span class="sev niedrig">Niedrig</span><div><strong>Kleine Fehler im Medienbereich</strong><p>„Immobilienmaneger“ statt „immobilienmanager“, derselbe Beitrag erscheint zweimal (Braunschweiger und Saarbrücker Zeitung), und zwischen zwei Einträgen ist ein Rest aus dem Quelltext („--&gt;“) sichtbar.</p><p class="fix">Liste bereinigen und einheitlich aufbauen.</p></div></div></div><div class="group"><h3>Technik und Ladezeit</h3><div class="find"><span class="sev hoch">Hoch</span><div><strong>Ein Foto mit 19,6 MB ist eingebunden</strong><p>Das Bild am Schreibtisch ist in der Originalgröße von 6000 × 4000 Pixeln hinterlegt (19,6 MB beim Abruf der Bildadresse). Das Vorschaubild für geteilte Links hat 5,1 MB.</p><p class="fix">Bilder in passender Größe und modernem Format ausliefern. Im Entwurf ist das größte Bild 0,6 MB groß.</p></div></div><div class="find"><span class="sev mittel">Mittel</span><div><strong>25 Skripte und 8 Stildateien für eine Startseite</strong><p>Die Seite läuft mit WordPress, Elementor und Jetpack. Für den Inhalt der Startseite ist das mehr Technik als nötig.</p><p class="fix">Schlanke Seite ohne Baukasten. Der Entwurf kommt mit drei Skripten aus.</p></div></div><div class="find"><span class="sev niedrig">Niedrig</span><div><strong>Nur 4 von 18 Bildern laden verzögert</strong><p>Bilder weiter unten werden schon beim Öffnen der Seite angefordert.</p><p class="fix">Bilder erst laden, wenn sie in Sichtweite kommen.</p></div></div></div><div class="group"><h3>Recht und Datenschutz</h3><div class="find"><span class="sev hoch">Hoch</span><div><strong>Die Datenschutzerklärung ist nicht verlinkt</strong><p>Es gibt eine Datenschutzerklärung unter <code>/rechtliches/</code>. Auf der Startseite und auf der Kontaktseite führt aber kein Link dorthin, auch nicht am Kontaktformular.</p><p class="fix">Datenschutz im Fuß jeder Seite und am Formular verlinken.</p></div></div><div class="find"><span class="sev hoch">Hoch</span><div><strong>Google Maps und Besucherstatistik laden ohne Zustimmung</strong><p>Auf jeder geprüften Seite wird eine Karte von <code>maps.google.com</code> eingebettet, dazu die Statistik von <code>stats.wp.com</code>. Beim Aufruf erschien kein Einwilligungsdialog.</p><p class="fix">Karte erst nach Klick laden oder durch ein Bild mit Link ersetzen. Statistik ohne Cookies oder mit Einwilligung.</p></div></div><div class="find"><span class="sev mittel">Mittel</span><div><strong>Das Impressum nennt Gesetze, die nicht mehr gelten</strong><p>Genannt werden § 5 TMG und § 55 II RStV. Das TMG wurde 2024 durch das Digitale-Dienste-Gesetz abgelöst, der Rundfunkstaatsvertrag 2020 durch den Medienstaatsvertrag.</p><p class="fix">Impressum auf den aktuellen Stand bringen und anwaltlich prüfen lassen.</p></div></div><div class="find"><span class="sev niedrig">Niedrig</span><div><strong>Teilnahmebedingungen einer beendeten Verlosung sind noch online</strong><p>Die Seite zur Instagram-Verlosung „8 Osternester“ (März/April 2026) steht weiterhin in der Sitemap.</p><p class="fix">Seite entfernen oder archivieren.</p></div></div></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="sec-head"><p class="label">Entwurf</p><h2>Fertig gebaut: Sanieren statt abreißen, zum Anfassen</h2>
+  <p>Ihre Philosophie wird zur Hauptsache. Beim Scrollen verwandelt sich ein leerstehender Altbau Schritt für Schritt: Gerüst, neue Fassade, Fensterläden, Solaranlage, Licht in den Fenstern. Alle Texte, Zahlen und Fotos stammen von Ihrer heutigen Seite.</p></div>
+  <div class="pair">
+    <figure><img src="img/entwurf-start.jpg" alt="Entwurf: Startbildschirm mit Überschrift Sanieren statt abreißen und 3D-Haus im Leerstand" width="1443" height="767"><figcaption>Erster Bildschirm: Aussage, Knopf, Belege und das Haus vor der Sanierung.</figcaption></figure>
+    <figure><img src="img/entwurf-saniert.jpg" alt="Entwurf: dasselbe 3D-Haus saniert, mit Solaranlage und Fensterläden" width="1443" height="767"><figcaption>Drei Scroll-Schritte später: dasselbe Haus, saniert und vermietet.</figcaption></figure>
+  </div>
+  <ul class="what">
+    <li><b>3D-Haus zum Scrollen</b>Die Sanierung in drei Schritten, reagiert auf Maus und Finger.</li>
+    <li><b>Vier Unternehmen als Karten</b>Jede mit eigenem nächsten Schritt.</li>
+    <li><b>Projekte mit Eckdaten</b>Dammheim, Ettlingen, Denkmalobjekt von 1749.</li>
+    <li><b>Presse als Beleg</b>Laufband mit den Medien, darunter die Beiträge.</li>
+    <li><b>Kontakt-Weiche</b>Vier Anliegen, je ein passender Hinweis.</li>
+    <li><b>Schlank gebaut</b>Keine fremden Server, Schrift und Skripte liegen lokal.</li>
+  </ul>
+  <div class="row"><a class="btn" href="vorschau/">Entwurf ausprobieren <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+  <p class="note">Der Entwurf ist ein Vorschlag von Y Ventures und keine offizielle Seite der Fritz Gruppe. Das Formular im Entwurf versendet keine Daten.</p></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><p class="label">Angebot</p><h2>Zwei Wege zum Festpreis</h2>
+  <p>Beide Pakete bauen auf dem Entwurf auf. Sie zahlen einen festen Betrag, keine Stunden.</p></div>
+  <div class="opts">
+    <div class="opt">
+      <p class="label">Paket 1</p><h3>Neue Startseite</h3>
+      <p class="sum num">1.900 €<small>netto, einmalig</small></p>
+      <ul>
+        <li>Startseite wie im Entwurf, mit 3D-Haus und Kontakt-Weiche</li>
+        <li>Alle Befunde, die die Startseite betreffen</li>
+        <li>Musterseiten entfernt, Datenschutz verlinkt</li>
+        <li>Eine Korrekturrunde</li>
+        <li>Abschlussbericht mit Vorher-Nachher-Vergleich</li>
+      </ul>
+    </div>
+    <div class="opt rec">
+      <p class="label">Paket 2 · Empfehlung</p><h3>Kompletter Auftritt</h3>
+      <p class="sum num">4.900 €<small>netto, einmalig</small></p>
+      <ul>
+        <li>Alles aus Paket 1</li>
+        <li>Eigene Seiten für Unternehmen, Projekte, Medien und Johannes Fritz</li>
+        <li>Alle 20 Befunde bearbeitet</li>
+        <li>Anfragen je Anliegen an die richtige Adresse</li>
+        <li>Umzug mit Weiterleitung aller bisherigen Adressen</li>
+        <li>Zwei Korrekturrunden und Abschlussbericht</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cond"><b>Zahlung:</b> 50 % bei Auftrag, 50 % bei Abnahme. Zahlungsziel 14 Tage. Alle Preise netto zzgl. 19 % USt. Das Angebot gilt bis 24.12.2026.</p>
+  <p class="cond"><b>Voraussetzung:</b> Zugang zur bisherigen Seite und zur Domain oder ein Ansprechpartner, der beides betreut.</p>
+  <p class="cond"><b>Nicht enthalten:</b> Rechtsberatung, neue Fotos oder Videos sowie die Seiten von 133 Boutique Hotel, Montelio und Frimmobau.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><p class="label">Ablauf</p><h2>In vier Schritten zur neuen Seite</h2></div>
+  <ol class="steps">
+    <li><b>Freigabe und Zugang</b>Sie wählen ein Paket und geben uns Zugang zu Seite und Domain.</li>
+    <li><b>Abstimmung</b>Wir gehen den Entwurf gemeinsam durch: Texte, Bilder, Ansprechpartner je Anliegen.</li>
+    <li><b>Umsetzung</b>Wir bauen die Seite fertig und zeigen sie Ihnen vorab unter einer Testadresse.</li>
+    <li><b>Abnahme</b>Sie geben frei, wir schalten live und liefern den Abschlussbericht.</li>
+  </ol>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><p class="label">Nächster Schritt</p><h2>Ein kurzes Gespräch genügt</h2>
+  <p>Schauen Sie sich den Entwurf an und sagen Sie uns, was Ihnen gefällt und was nicht. Yves Unser, Telefon <a href="tel:+4915150797898">0151 50797898</a>, <a href="mailto:yventures@icloud.com">yventures@icloud.com</a>.</p></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>Y Ventures UG (haftungsbeschränkt) · Strüttweg 11, 75334 Conweiler · Geschäftsführer: Yves Unser · Amtsgericht Mannheim, HRB 740691 · USt-IdNr. DE302329988 · y-ventures.de</p>
+  <p>Die Hinweise zu Recht und Datenschutz sind technische Beobachtungen und keine Rechtsberatung. Der Entwurf ist ein Vorschlag von Y Ventures und keine offizielle Seite der Fritz Gruppe. Bilder und Texte im Entwurf stammen von fritzgruppe.net.</p>
+</div></footer>
+</body></html>
