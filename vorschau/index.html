@@ -56,7 +56,10 @@ p{text-wrap:pretty}
 .ba .hero{min-height:100vh;min-height:100svh;padding:120px 0 96px}
 .ba .stage-label{left:auto;right:max(20px,calc((100vw - 1200px)/2));transform:none;z-index:1}
 .stage{position:sticky;top:0;height:100vh;height:100svh;z-index:1}
-.stage canvas{width:100%;height:100%;display:block}
+.stage{display:grid;place-items:center;perspective:1400px}
+.haus{position:relative;height:min(80%,740px);max-width:100%;aspect-ratio:1/1;will-change:transform;transform-style:preserve-3d}
+.haus img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.haus .h2,.haus .h3{-webkit-mask-image:linear-gradient(100deg,#000 calc(var(--t,0)*130% - 30%),transparent calc(var(--t,0)*130%));mask-image:linear-gradient(100deg,#000 calc(var(--t,0)*130% - 30%),transparent calc(var(--t,0)*130%))}
 .stage-label{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);display:flex;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .stage-label span{padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:rgba(255,255,255,.45);transition:all .4s;white-space:nowrap}
 .stage-label span.on{background:#fff;color:var(--petrol);border-color:#fff}
@@ -265,7 +268,7 @@ footer nav{display:flex;gap:24px}
 <main id="top">
 <section class="ba" id="ba">
   <div class="ba-img ba-alt" role="img" aria-label="Entkernter Altbau mit alten Holzbalken"></div>
-  <div class="ba-img ba-neu" role="img" aria-label="Sanierte Wohnung mit freigelegten Balken"></div>
+  <div class="ba-img ba-neu" role="img" aria-label="Visualisierung: derselbe Raum nach der Sanierung"></div>
   <div class="ba-shade"></div>
   <div class="wrap">
   <div class="hero">
@@ -288,7 +291,7 @@ footer nav{display:flex;gap:24px}
     <div class="scrollhint"><i></i>Mit der Maus über das Bild fahren</div>
   </div>
   </div>
-  <div class="stage-label" aria-hidden="true"><span data-b="0" class="on">Entkernt</span><span data-b="1">Saniert</span></div>
+  <div class="stage-label" aria-hidden="true"><span data-b="0" class="on">Entkernt</span><span data-b="1">Saniert · Visualisierung</span></div>
 </section>
 
 <div class="story" id="story">
@@ -312,7 +315,7 @@ footer nav{display:flex;gap:24px}
   </div>
 
   <div class="stage" aria-hidden="true">
-    <canvas id="scene"></canvas>
+    <div class="haus"><img class="h1" src="assets/haus-1.jpg" alt="" width="1100" height="1100"><img class="h2" src="assets/haus-2.jpg" alt="" width="1100" height="1100"><img class="h3" src="assets/haus-3.jpg" alt="" width="1100" height="1100"></div>
     <div class="stage-label"><span data-l="0" class="on">Leerstand</span><span data-l="1">Sanierung</span><span data-l="2">Vermietet</span></div>
   </div>
 </div>
@@ -497,7 +500,6 @@ footer nav{display:flex;gap:24px}
 
 <div class="demo-pill"><b>Designentwurf</b> von Y Ventures · nicht die offizielle Website der Fritz Gruppe</div>
 
-<script src="assets/three.min.js"></script>
 <script src="assets/gsap.min.js"></script>
 <script src="assets/ScrollTrigger.min.js"></script>
 <script>
@@ -510,240 +512,26 @@ gsap.registerPlugin(ScrollTrigger);
 const nav = document.getElementById('nav');
 addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 30), {passive:true});
 
-/* ---------- 3D-Haus ---------- */
-const canvas = document.getElementById('scene');
-const stage = canvas.parentElement;
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(32, 1, .1, 100);
-
-renderer.outputEncoding = THREE.sRGBEncoding;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = .98;
-
-const hemi = new THREE.HemisphereLight(0xcfe3ee, 0x4a4338, .5);
-scene.add(hemi);
-const sun = new THREE.DirectionalLight(0xbfd6e0, .9);
-sun.position.set(6, 9, 7);
-sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.bias = -.0004; sun.shadow.normalBias = .03; sun.shadow.radius = 4;
-Object.assign(sun.shadow.camera, {left:-7, right:7, top:7, bottom:-7, near:1, far:30});
-scene.add(sun);
-const fill = new THREE.DirectionalLight(0x9fb8c6, .25); fill.position.set(-6, 4, 3); scene.add(fill);
-
-/* Texturen aus dem Canvas, damit nichts nachgeladen wird */
-let seed = 11; const rnd = () => (seed = seed*16807 % 2147483647)/2147483647;
-function tex(w, h, draw, rx, ry, colour){
-  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
-  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx || 1, ry || 1);
-  if(colour !== false) t.encoding = THREE.sRGBEncoding; t.anisotropy = 8; return t;
-}
-const tPlaster = tex(256, 256, (g, w, h) => {
-  g.fillStyle = '#f1f1ef'; g.fillRect(0, 0, w, h);
-  for(let i = 0; i < 9000; i++){ const v = 150 + rnd()*105 | 0; g.fillStyle = `rgba(${v},${v},${v},.09)`; g.fillRect(rnd()*w, rnd()*h, 1 + rnd()*2, 1 + rnd()*2); }
-  for(let i = 0; i < 26; i++){ const x = rnd()*w, y = rnd()*h, r = 14 + rnd()*40, gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(120,120,115,.10)'); gr.addColorStop(1, 'rgba(120,120,115,0)'); g.fillStyle = gr; g.fillRect(x - r, y - r, r*2, r*2); }
-}, 3, 2);
-const tDirt = tex(512, 256, (g, w, h) => {
-  for(let i = 0; i < 70; i++){ const x = rnd()*w, y = rnd()*h*.5, l = 40 + rnd()*200, b = 4 + rnd()*22, gr = g.createLinearGradient(0, y, 0, y + l); gr.addColorStop(0, 'rgba(40,36,30,.55)'); gr.addColorStop(1, 'rgba(40,36,30,0)'); g.fillStyle = gr; g.fillRect(x, y, b, l); }
-  for(let i = 0; i < 40; i++){ const x = rnd()*w, y = rnd()*h, r = 10 + rnd()*46, gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(45,40,34,.5)'); gr.addColorStop(1, 'rgba(45,40,34,0)'); g.fillStyle = gr; g.fillRect(x - r, y - r, r*2, r*2); }
-  const gr = g.createLinearGradient(0, h*.72, 0, h); gr.addColorStop(0, 'rgba(40,44,34,0)'); gr.addColorStop(1, 'rgba(40,44,34,.7)'); g.fillStyle = gr; g.fillRect(0, h*.72, w, h*.28);
-});
-const tTiles = tex(256, 256, (g, w, h) => {
-  g.fillStyle = '#8f8f8f'; g.fillRect(0, 0, w, h);
-  for(let r = 0; r < 16; r++) for(let c = -1; c < 13; c++){
-    const x = c*21.33 + (r % 2 ? 10.6 : 0), y = r*16, v = 178 + rnd()*62 | 0;
-    g.fillStyle = `rgb(${v},${v},${v})`; g.fillRect(x + 1, y, 19.6, 15);
-    const gr = g.createLinearGradient(0, y + 9, 0, y + 16); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,.42)'); g.fillStyle = gr; g.fillRect(x + 1, y + 9, 19.6, 7);
-  }
-}, 7, 3);
-const tSlats = tex(64, 128, (g, w, h) => { for(let y = 0; y < h; y += 8){ const gr = g.createLinearGradient(0, y, 0, y + 8); gr.addColorStop(0, '#fff'); gr.addColorStop(.7, '#cfcfcf'); gr.addColorStop(1, '#6f6f6f'); g.fillStyle = gr; g.fillRect(0, y, w, 8); } g.strokeStyle = '#8a8a8a'; g.lineWidth = 6; g.strokeRect(0, 0, w, h); });
-const tSolar = tex(128, 96, (g, w, h) => { g.fillStyle = '#0d1f3f'; g.fillRect(0, 0, w, h); g.strokeStyle = 'rgba(190,205,225,.55)'; g.lineWidth = 1; for(let x = 0; x <= w; x += 16){ g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); } for(let y = 0; y <= h; y += 16){ g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); } g.strokeStyle = '#c9ced6'; g.lineWidth = 5; g.strokeRect(0, 0, w, h); });
-const tGrass = tex(256, 256, (g, w, h) => { g.fillStyle = '#5d7c3f'; g.fillRect(0, 0, w, h); for(let i = 0; i < 14000; i++){ const k = rnd(); g.fillStyle = `rgba(${50 + k*70 | 0},${95 + k*75 | 0},${35 + k*40 | 0},.5)`; g.fillRect(rnd()*w, rnd()*h, 1.4, 2 + rnd()*3); } }, 6, 6);
-const tStone = tex(128, 128, (g, w, h) => { g.fillStyle = '#b9b3a8'; g.fillRect(0, 0, w, h); for(let i = 0; i < 2600; i++){ const v = 120 + rnd()*110 | 0; g.fillStyle = `rgba(${v},${v - 4},${v - 12},.16)`; g.fillRect(rnd()*w, rnd()*h, 2, 2); } }, 2, 2);
-
-/* Himmel als Spiegelung für Glas und glatte Flächen */
-const sky = ['#9db9cc', '#9db9cc', '#dcecf6', '#3a3a34', '#b5cddc', '#8fabbf'].map((c, i) => { const cv = document.createElement('canvas'); cv.width = cv.height = 32; const g = cv.getContext('2d'); if(i === 2 || i === 3){ g.fillStyle = c; g.fillRect(0, 0, 32, 32); } else { const gr = g.createLinearGradient(0, 0, 0, 32); gr.addColorStop(0, '#dcecf6'); gr.addColorStop(.55, c); gr.addColorStop(.6, '#6f6a5c'); gr.addColorStop(1, '#3a3a34'); g.fillStyle = gr; g.fillRect(0, 0, 32, 32); } return cv; });
-const cube = new THREE.CubeTexture(sky); cube.needsUpdate = true;
-const pmrem = new THREE.PMREMGenerator(renderer);
-scene.environment = pmrem.fromCubemap(cube).texture;
-
-const C = h => new THREE.Color(h).convertSRGBToLinear();
-const mat = (c, o = {}) => new THREE.MeshStandardMaterial(Object.assign({color:c && c.isColor ? c : C(c), roughness:.9, envMapIntensity:.22}, o));
-const box = (w, h, d, m, x = 0, y = 0, z = 0, parent) => {
-  const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m);
-  o.position.set(x, y, z); o.castShadow = o.receiveShadow = true;
-  (parent || house).add(o); return o;
-};
-const cyl = (r, l, m, x, y, z, rz, parent) => { const o = new THREE.Mesh(new THREE.CylinderGeometry(r, r, l, 12), m); o.position.set(x, y, z); if(rz) o.rotation.z = rz; o.castShadow = true; (parent || house).add(o); return o; };
-
-const house = new THREE.Group();
-scene.add(house);
-const W = 4.6, H = 2.7, D = 2.8, OV = .3, RH = 1.6, A = D/2 + OV, SL = Math.hypot(A, RH), slope = Math.atan2(RH, A), K = RH*(1 - (D/2)/A);
-
-/* Sockelplatte wie bei einem Architekturmodell, darauf Rasen */
-const mGrass = mat(0xffffff, {map:tGrass, bumpMap:tGrass, bumpScale:.02, roughness:1});
-const mEarth = mat(0x4d4338, {roughness:1});
-const ground = new THREE.Mesh(new THREE.CylinderGeometry(4.1, 4.1, .2, 96), [mEarth, mGrass, mEarth]);
-ground.position.y = -.1; ground.receiveShadow = true; house.add(ground);
-const plinth = new THREE.Mesh(new THREE.CylinderGeometry(4.22, 4.22, .1, 96), mat(0x0b303c, {roughness:.5})); plinth.position.y = -.25; house.add(plinth);
-const mStone = mat(0xffffff, {map:tStone, bumpMap:tStone, bumpScale:.01});
-box(1.0, .04, 2.3, mStone, -.55, .02, D/2 + 1.25);
-
-const mWall = mat(0x8d877c, {map:tPlaster, bumpMap:tPlaster, bumpScale:.012});
-const mSockel = mat(0x6a645c, {map:tPlaster, bumpMap:tPlaster, bumpScale:.02});
-const mRoof = mat(0x6b6661, {map:tTiles, bumpMap:tTiles, bumpScale:.035, roughness:.8});
-const mFrame = mat(0x8e8a82, {roughness:.6});
-const mGlass = new THREE.MeshStandardMaterial({color:C(0x1a262c), roughness:.5, metalness:.35, envMapIntensity:.3, emissive:C(0xffd58a), emissiveIntensity:0});
-const mDoor = mat(0x4a4038, {roughness:.55});
-const mShutter = mat(0x8c2332, {map:tSlats, bumpMap:tSlats, bumpScale:.02, roughness:.6});
-const mZinc = mat(0x9aa3a8, {roughness:.35, metalness:.7, envMapIntensity:.9});
-const mDirt = new THREE.MeshStandardMaterial({map:tDirt, transparent:true, depthWrite:false, roughness:1, polygonOffset:true, polygonOffsetFactor:-2});
-
-box(W, H + K, D, mWall, 0, (H + K)/2, 0);
-box(W + .08, .5, D + .08, mSockel, 0, .25, 0);
-const gs = new THREE.Shape(); gs.moveTo(-D/2, 0); gs.lineTo(D/2, 0); gs.lineTo(D/2, K); gs.lineTo(0, RH - .04); gs.lineTo(-D/2, K); gs.closePath();
-for(const sx of [-1, 1]){ const g = new THREE.Mesh(new THREE.ShapeGeometry(gs), mWall); g.rotation.y = Math.PI/2; g.position.set(sx*(W/2 - .001), H, 0); g.material.side = THREE.DoubleSide; g.castShadow = true; house.add(g); }
-for(const sz of [-1, 1]){
-  const r = box(W + .6, .08, SL + .06, mRoof, 0, H + RH/2 + .03, sz*A/2); r.rotation.x = sz*slope;
-  cyl(.055, W + .6, mZinc, 0, H - .03, sz*(A + .05), Math.PI/2);
-  const dirt = new THREE.Mesh(new THREE.PlaneGeometry(W, H + K), mDirt); dirt.position.set(0, (H + K)/2, sz*(D/2 + .004)); if(sz < 0) dirt.rotation.y = Math.PI; house.add(dirt);
-}
-for(const sx of [-1, 1]){ const dirt = new THREE.Mesh(new THREE.PlaneGeometry(D, H + K), mDirt); dirt.position.set(sx*(W/2 + .004), (H + K)/2, 0); dirt.rotation.y = sx*Math.PI/2; house.add(dirt); }
-cyl(.07, W + .62, mRoof, 0, H + RH + .05, 0, Math.PI/2);
-cyl(.04, H, mZinc, W/2 - .12, H/2, D/2 + .07);
-box(.4, 1.0, .4, mSockel, 1.25, H + RH*.78, -.55); box(.5, .07, .5, mZinc, 1.25, H + RH*.78 + .53, -.55);
-
-const shutters = [], boards = [];
-const mBoard = mat(0x6a543d, {transparent:true, roughness:1});
-const fz = D/2;
-function fenster(x, y, parent, z0){
-  box(.64, .9, .09, mFrame, x, y, z0, parent);
-  box(.5, .76, .1, mGlass, x, y, z0 + .012, parent).castShadow = false;
-  box(.035, .76, .11, mFrame, x, y, z0 + .014, parent); box(.5, .03, .11, mFrame, x, y + .12, z0 + .014, parent);
-  box(.74, .05, .16, mStone, x, y - .47, z0 + .04, parent);
-}
-for(let r = 0; r < 2; r++) for(let c = 0; c < 4; c++){
-  const x = -1.65 + c*1.1, y = 1.05 + r*1.14;
-  if(r === 0 && c === 1){
-    box(.76, 1.42, .1, mFrame, x, 1.07, fz); box(.6, 1.02, .1, mDoor, x, .9, fz + .02);
-    box(.22, .36, .11, mDoor, x - .14, 1.08, fz + .025).material = mFrame; box(.22, .36, .11, mFrame, x + .14, 1.08, fz + .025);
-    box(.2, .32, .12, mDoor, x - .14, 1.08, fz + .03); box(.2, .32, .12, mDoor, x + .14, 1.08, fz + .03);
-    box(.6, .2, .1, mGlass, x, 1.56, fz + .02).castShadow = false; box(.03, .1, .04, mZinc, x + .22, .88, fz + .09);
-    for(let i = 0; i < 3; i++) box(.95, .12, .28, mStone, x, .31 - i*.12, fz + .16 + i*.26);
-    continue;
-  }
-  fenster(x, y, house, fz);
-  for(const sd of [-1, 1]) shutters.push(box(.24, .86, .045, mShutter, x + sd*.45, y, fz + .03));
-  if((r + c) % 2 === 0){
-    const b1 = box(.8, .13, .035, mBoard, x, y + .12, fz + .1); b1.rotation.z = .33;
-    const b2 = box(.8, .13, .035, mBoard, x, y - .1, fz + .1); b2.rotation.z = -.28;
-    boards.push(b1, b2);
-  }
-}
-for(const sx of [-1, 1]){ const side = new THREE.Group(); side.rotation.y = sx*Math.PI/2; side.position.x = sx*W/2; house.add(side); for(const z of [-.62, .62]) for(const y of [1.05, 2.19]) fenster(z, y, side, 0); }
-
-const mPatch = mat(0x1b1917, {transparent:true, roughness:1});
-const nrm = new THREE.Vector3(0, Math.cos(slope), Math.sin(slope));
-const patches = new THREE.Group(); patches.position.set(0, H + RH/2 + .03, A/2).addScaledVector(nrm, .045); patches.rotation.x = slope; house.add(patches);
-[[-1.5, -.2, .7, .5], [.6, .25, .9, .4], [1.7, -.3, .5, .6]].forEach(q => box(q[2], .01, q[3], mPatch, q[0], 0, q[1], patches).castShadow = false);
-const solar = new THREE.Group(); solar.position.copy(patches.position).addScaledVector(nrm, .02); solar.rotation.x = slope; house.add(solar);
-const mSolar = new THREE.MeshStandardMaterial({map:tSolar, roughness:.12, metalness:.5, envMapIntensity:1.3});
-for(let r = 0; r < 2; r++) for(let c = 0; c < 5; c++) box(.68, .035, .52, mSolar, -1.46 + c*.73, .03, -.3 + r*.57, solar);
-
-const mPole = new THREE.MeshStandardMaterial({color:C(0xc8d0d4), transparent:true, roughness:.35, metalness:.8, envMapIntensity:1});
-const mPlank = mat(0xb08a55, {transparent:true, roughness:1});
-const scaffold = new THREE.Group(); house.add(scaffold);
-const sz0 = fz + .62;
-for(let i = 0; i < 6; i++){ const x = -W/2 - .2 + i*((W + .4)/5); for(const z of [sz0, sz0 - .45]) cyl(.026, 3.7, mPole, x, 1.85, z, 0, scaffold); for(const y of [1.15, 2.3, 3.45]) { const t = cyl(.02, .45, mPole, x, y, sz0 - .225, 0, scaffold); t.rotation.x = Math.PI/2; } }
-for(const y of [1.15, 2.3, 3.45]){ cyl(.022, W + .4, mPole, 0, y, sz0, Math.PI/2, scaffold); cyl(.022, W + .4, mPole, 0, y + .5, sz0, Math.PI/2, scaffold); if(y < 3) box(W + .4, .04, .42, mPlank, 0, y - .5, sz0 - .225, scaffold); }
-
-const hp = new THREE.Group(); hp.position.set(W/2 + .5, 0, -.5); house.add(hp);
-box(.75, .7, .34, mat(0xe3e6e8, {roughness:.4}), 0, .4, 0, hp); box(.75, .08, .34, mStone, 0, .04, 0, hp);
-const fan = new THREE.Mesh(new THREE.CircleGeometry(.24, 24), mat(0x1c2226, {roughness:.5})); fan.position.set(-.08, .42, .172); hp.add(fan);
-const trees = [];
-[[-3.0, 1.5, 1], [3.2, 1.6, .8], [-3.2, -1.3, .75], [2.9, -1.6, .6]].forEach(t => {
-  const g = new THREE.Group(); g.position.set(t[0], 0, t[1]);
-  const tr = new THREE.Mesh(new THREE.CylinderGeometry(.06, .1, 1.1, 8), mat(0x4f3d2b)); tr.position.y = .55; tr.castShadow = true; g.add(tr);
-  [[0, 1.5, 0, .62], [.32, 1.25, .1, .42], [-.3, 1.3, -.12, .44], [.05, 1.9, .05, .4]].forEach(b => {
-    const geo = new THREE.SphereGeometry(b[3], 12, 9), pos = geo.attributes.position;
-    for(let i = 0; i < pos.count; i++){ const k = 1 + (rnd() - .5)*.3; pos.setXYZ(i, pos.getX(i)*k, pos.getY(i)*k, pos.getZ(i)*k); }
-    geo.computeVertexNormals();
-    const m = new THREE.Mesh(geo, mat(new THREE.Color(0x3f7a3c).offsetHSL((rnd() - .5)*.04, 0, (rnd() - .5)*.08).convertSRGBToLinear(), {roughness:1})); m.position.set(b[0], b[1], b[2]); m.castShadow = true; g.add(m);
-  });
-  g.userData.k = t[2]; house.add(g); trees.push(g);
-});
-
-const col = {
-  wall:[C(0x8d877c), C(0xf0d489)], sockel:[C(0x6a645c), C(0x8c2332)], roof:[C(0x6b6661), C(0xc4623c)],
-  frame:[C(0x8e8a82), C(0xf6f3ec)], door:[C(0x4a4038), C(0x8c2332)], glass:[C(0x1a262c), C(0x2f4048)],
-  sun:[C(0xbfd6e0), C(0xfff0d2)], ground:[C(0x8b8378), C(0xffffff)]
-};
-const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a)/(b - a))); return t*t*(3 - 2*t); };
-let progress = reduced ? 1 : 0, shown = -1, mx = 0, my = 0, tmx = 0, tmy = 0;
+/* ---------- Haus: drei fotorealistische Zustände, beim Scrollen überblendet ---------- */
+const stage = document.querySelector('.stage'), haus = stage.querySelector('.haus');
+const hImg = [haus.querySelector('.h2'), haus.querySelector('.h3')];
 const labels = document.querySelectorAll('.stage .stage-label span');
-
-function apply(p){
-  const paint = ss(.34, .7, p);
-  mWall.color.lerpColors(col.wall[0], col.wall[1], paint);
-  mSockel.color.lerpColors(col.sockel[0], col.sockel[1], paint);
-  mRoof.color.lerpColors(col.roof[0], col.roof[1], ss(.4, .72, p));
-  mFrame.color.lerpColors(col.frame[0], col.frame[1], paint);
-  mDoor.color.lerpColors(col.door[0], col.door[1], paint);
-  mGlass.color.lerpColors(col.glass[0], col.glass[1], paint);
-  mGlass.emissiveIntensity = ss(.76, 1, p)*.7;
-  mGlass.roughness = .5 - paint*.42; mGlass.envMapIntensity = .3 + paint*.9;
-  mGrass.color.lerpColors(col.ground[0], col.ground[1], ss(.55, 1, p));
-  mDirt.opacity = 1 - ss(.3, .62, p);
-  const bo = 1 - ss(.14, .36, p);
-  mBoard.opacity = bo; boards.forEach(b => b.visible = bo > .01);
-  mPatch.opacity = 1 - ss(.36, .56, p); patches.visible = mPatch.opacity > .01;
-  const so = ss(.12, .28, p)*(1 - ss(.62, .78, p));
-  mPole.opacity = so; mPlank.opacity = so; scaffold.visible = so > .01;
-  scaffold.position.y = (1 - ss(.12, .28, p))*-.6;
-  const sh = ss(.64, .82, p);
-  shutters.forEach(s => { s.scale.x = Math.max(.001, sh); s.visible = sh > .01; });
-  const sl = ss(.72, .9, p);
-  solar.scale.setScalar(Math.max(.001, sl)); solar.visible = sl > .01;
-  const h = ss(.78, .92, p); hp.scale.setScalar(Math.max(.001, h)); hp.visible = h > .01;
-  trees.forEach(t => { const k = ss(.8, 1, p)*t.userData.k; t.scale.setScalar(Math.max(.001, k)); t.visible = k > .01; });
-  hemi.intensity = .42 + ss(.3, 1, p)*.3;
-  sun.intensity = .8 + ss(.3, 1, p)*1.1;
-  sun.color.lerpColors(col.sun[0], col.sun[1], ss(.4, 1, p));
-  const idx = p < .14 ? 0 : p < .8 ? 1 : 2;
-  if(idx !== shown){ shown = idx; labels.forEach((l, i) => l.classList.toggle('on', i === idx)); }
-}
-
-function size(){
-  const w = stage.clientWidth, h = stage.clientHeight;
-  renderer.setSize(w, h, false);
-  camera.aspect = w/h;
-  const narrow = w/h < 1;
-  camera.fov = narrow ? 44 : 32;
-  camera.position.set(0, narrow ? 4.2 : 4.6, narrow ? 13.5 : 14.5);
-  camera.lookAt(0, 1.55, 0);
-  camera.updateProjectionMatrix();
-}
-size(); addEventListener('resize', size);
-
-let visible = true;
+const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a)/(b - a))); return t*t*(3 - 2*t); };
+let progress = reduced ? 1 : 0, shown = -1, mx = 0, my = 0, tmx = 0, tmy = 0, visible = true;
 new IntersectionObserver(e => visible = e[0].isIntersecting).observe(stage);
 if(!reduced) addEventListener('pointermove', e => { tmx = e.clientX/innerWidth - .5; tmy = e.clientY/innerHeight - .5; }, {passive:true});
-
 let cur = progress;
 function frame(t){
   requestAnimationFrame(frame);
   if(!visible) return;
   cur += (progress - cur)*.09;
   mx += (tmx - mx)*.05; my += (tmy - my)*.05;
-  apply(cur);
-  house.rotation.y = -.62 + cur*.95 + mx*.35 + (reduced ? 0 : Math.sin(t*.0004)*.04);
-  house.rotation.x = my*.08;
-  house.position.y = -.2 + (reduced ? 0 : Math.sin(t*.0009)*.04);
-  renderer.render(scene, camera);
+  const t2 = ss(.1, .42, cur), t3 = ss(.56, .92, cur);
+  hImg[0].style.setProperty('--t', t2.toFixed(3)); hImg[1].style.setProperty('--t', t3.toFixed(3));
+  const bob = reduced ? 0 : Math.sin(t*.0009)*6;
+  haus.style.transform = `translateY(${bob.toFixed(1)}px) rotateY(${(mx*9).toFixed(2)}deg) rotateX(${(-my*5).toFixed(2)}deg) scale(${(.95 + cur*.05).toFixed(3)})`;
+  const idx = t3 > .55 ? 2 : t2 > .45 ? 1 : 0;
+  if(idx !== shown){ shown = idx; labels.forEach((l, i) => l.classList.toggle('on', i === idx)); }
 }
 requestAnimationFrame(frame);
 window.__fg = () => ({progress, cur});
@@ -810,7 +598,6 @@ if(!reduced){
 
   gsap.from('.h1-line>span', {yPercent:110, duration:1.1, ease:'power4.out', stagger:.12, delay:.15});
   gsap.from('.hero .eyebrow, .hero .lead, .hero .cta, .hero .proof, .scrollhint', {opacity:0, y:20, duration:.8, ease:'power2.out', stagger:.09, delay:.55});
-  gsap.from(house.scale, {x:.6, y:.6, z:.6, duration:1.6, ease:'power3.out'});
 
   gsap.utils.toArray('.step').forEach(s => gsap.from(s.children, {opacity:0, y:34, duration:.8, ease:'power2.out', stagger:.1, scrollTrigger:{trigger:s, start:'top 72%'}}));
   ScrollTrigger.batch('.reveal', {start:'top 88%', once:true, onEnter:b => gsap.to(b, {opacity:1, y:0, duration:.9, ease:'power3.out', stagger:.09, overwrite:true})});
